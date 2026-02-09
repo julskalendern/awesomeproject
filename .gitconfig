@@ -1,0 +1,5 @@
+[user]
+	name = Juls
+	email = testsendsay@bk.ru
+[alias]
+	history = log --graph
