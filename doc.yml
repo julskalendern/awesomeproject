@@ -1,0 +1,30 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+#в документации docker указано что сначала нужно удалить старые версии во избежание конфликтов, но в рамках автоматизации не думаю что это целесообразно
+  - name: согласно docs.docker сначала нужно установить это
+    apt:
+      name:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+      state: present
+  - name: нужен gpg-ключ
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+  - name: добавляем репо
+    apt_repository:
+      repo: deb https://download.docker.com/linux/ubuntu/ {{ ansible_distribution_release }} stable 
+      state: present
+#дальше docs.docker написано, что нужно установить приложение. судя по гуглу - лучше docker-ce
+  - name: docker-se
+    apt:
+      name: docker-ce
+      state: present
+  - name: docker-пуск
+    service:
+      name: docker
+      state: started
+      enabled: yes
