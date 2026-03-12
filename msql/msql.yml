@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+  - name: зависимость для обхода ошибки с PyMySQL, которую сложно решить на моем ржавом железе
+    apt:
+       name: python3-mysqldb
+       state: latest
+  - name: установка mysql
+    apt:
+       name: mysql-server
+       state: present
+  - name: создаем юзверя для mysql
+    mysql_user:
+       user: root
+       password: "12345"
+  - name: mysql-пуск
+    service:
+       name: mysql
+       state: started
+       enabled: true                                                                                                     
