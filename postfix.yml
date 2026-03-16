@@ -1,0 +1,21 @@
+---
+ - hosts: all
+   become: true
+   tasks:
+   - name: postfix_install
+     apt:
+       name: postfix
+       state: present
+#дока ansible говорит,что тег не может состоять из двух слов, поэтому использовано нижнее подчеркивание
+     tags: init_postfix
+   - name: postfix_start
+     service:
+       name: postfix
+       state: started
+       enabled: yes
+     tags: init postfix
+   - name: postfix_drop
+     apt:
+        name: postfix
+        state: absent
+     tags: drop_postfix
