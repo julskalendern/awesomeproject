@@ -1,0 +1,13 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for sftp
+ - name: install_vsftpd
+   apt:
+     name: vsftpd
+     state: present
+ - name: start_vsftpd
+   service:
+     name: vsftpd
+     state: started
+     enabled: true
+
