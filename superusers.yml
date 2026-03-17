@@ -1,0 +1,25 @@
+---
+ - hosts: localhost
+   gather_facts: no
+   become: true
+   tasks:
+    - name: create_superusers
+      group:
+        name: superusers
+        state: present
+    - name: create_users + add users
+      user:
+        name: '{{ item }}'
+        groups: superusers
+        append: yes
+#цикл чтобы создать 2х пользователей сразу
+      loop:
+        - user2
+        - user3
+    - name: sudo_for_superusers
+      lineinfile:
+        path: /etc/sudoers.d/superusers
+        create: yes
+        line: '%superusers ALL=(ALL) NOPASSWD: ALL'
+        state: present
+        validate: 'visudo -cf %s'

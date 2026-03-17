@@ -1,0 +1,37 @@
+---
+# tasks file for nginx-php
+ - name: install_nginx_php
+   apt:
+     name:
+      - nginx
+      -  php-fpm
+     state: present
+   notify: restart_nginx
+ - name: mkdir_for_DocumentRoot
+   file:
+     path: /opt/nginx/ansible
+     state: directory
+     mode: '0777'
+ - name: DocumentRoot
+   copy:
+     content: '<?php phpinfo();?>'
+     dest: /opt/nginx/ansible/index.php
+     owner: www-data
+     group: www-data
+     mode: '0777'
+ - name: change_root_in_default_nginx
+   lineinfile:
+     path: /etc/nginx/sites-available/default
+     regexp: '^(.*)root\s+/var/www/html(.*);$'
+     line:  'root /opt/nginx/ansible;'
+     state: present
+   notify: restart_nginx
+#это оказался самый сложный для меня шаг - понять как добавить index.php
+ - name: add_index.php_in_default_nginx
+   lineinfile:
+     path: /etc/nginx/sites-available/default
+     regex: '(.*index )(\S+)\s+(\S+)\s+(\S+)'
+     line: '\1index.php \2 \3 \4'
+     backrefs: yes
+     state: present
+   notify: restart_nginx

@@ -1,0 +1,19 @@
+---
+# tasks file for dnsmasq
+ - name: dnsmasq_install
+   apt: 
+     name: dnsmasq
+     state: present
+#сюрприз в виде занятого порта. для изменения решила использовать упомянутый в другом задании lineinfile
+ - name: change_port
+   lineinfile:
+      path: /etc/dnsmasq.conf
+      regex: '^#?port='
+      line: 'port=553'
+      state: present 
+ - name: dnsmasq_start
+   service:
+     name: dnsmasq
+     state: started
+     enabled: true
+
