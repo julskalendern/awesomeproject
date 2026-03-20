@@ -3,5 +3,5 @@
 # handlers file for php
  - name: restart_php
    service:
-    name: php-fpm
+    name: php{{ php_ver }}-fpm
     state: reloaded
