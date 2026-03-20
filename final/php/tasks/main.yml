@@ -1,0 +1,14 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for php
+ - name: install_php
+   apt:
+     name: php-fpm
+   notify: restart_php
+ - name: php_to_9000
+   lineinfile:
+     path: /etc/php/{{ ansible_facts.php_version }}/fpm/pool.d/www.conf
+     regexp: '^listen = ' 
+     line: 'listen = 127.0.0.1:9000'
+     state: present
+  notify: restart_php

@@ -1,0 +1,17 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for http
+ - name: install_nginx
+   apt:
+     name: nginx
+     state: present
+   notify: restart_nginx
+ - name: nginx_php_to_9000
+   blockinfile:
+     path: /etc/nginx/sites-enabled.default
+     block: |
+          location ~ \.php$ {
+          include snippets/fastcgi-php.conf;
+          fastcgi_pass   127.0.0.1:9000;
+      }
+   notify: restart_nginx
