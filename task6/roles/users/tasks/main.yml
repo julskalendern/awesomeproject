@@ -1,0 +1,16 @@
+---
+# tasks file for users
+ - name: create user
+   user:
+     name: user
+     create_home: yes
+ - name: mkdir_for_ssh
+   file:
+     name: /home/user/.ssh
+     state: directory
+     mode: '0700'
+ - name: ssh_in_user
+   authorized_key:
+     user: user
+     state: present
+     key: "{{ lookup('file', 'files/id_rsa.pub') }}"

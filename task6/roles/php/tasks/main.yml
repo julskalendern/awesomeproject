@@ -1,0 +1,28 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for php
+ - name: install_php
+   apt:
+     name: php-fpm
+   notify: restart_php
+#для ссылки конфига нужна конкретная версия пхп, пробую так:
+ - name: what_is_version_php
+   shell: apt-cache policy php-fpm | awk -F':' '/Candidate:/ {print $3}' | awk -F'+' '{print $1}'
+   register: version
+   changed_when: false
+#добавляем версию в переменную
+ - name: version_in_variable
+   set_fact:
+     php_ver: '{{ version.stdout }}'
+ - name: php_to_9000
+   lineinfile:
+     path: /etc/php/{{ php_ver }}/fpm/pool.d/www.conf
+     regexp: '^listen = '
+     line: 'listen = 127.0.0.1:9000'
+     state: present
+   notify: restart_php
+ - name: start_php
+   service:
+      name: php{{ php_ver }}-fpm
+      state: started
+      enabled: true

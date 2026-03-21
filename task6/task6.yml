@@ -1,0 +1,12 @@
+---
+ - hosts: srv-nginx
+   become: true
+   roles:
+    - users
+    - http
+
+ - hosts: srv-php
+   become: true
+   roles:
+    - users
+    - php
