@@ -1,0 +1,12 @@
+{
+    "name": "user/9.3.4",
+    "authors": [
+        {
+            "name": "Juls",
+            "email": "testsendsay@bk.ru"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "^6.3"
+    }
+}
