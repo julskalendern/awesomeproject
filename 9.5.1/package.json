@@ -1,0 +1,22 @@
+{
+  "name": "jk_9.5.1_zo",
+  "version": "2.1.0",
+  "description": "ticket 9.5.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julskalendern/awesomeproject.git"
+  },
+  "author": "julskelndern",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/julskalendern/awesomeproject/issues"
+  },
+  "homepage": "https://github.com/julskalendern/awesomeproject#readme",
+  "dependencies": {
+    "user": "^0.0.0"
+  }
+}
